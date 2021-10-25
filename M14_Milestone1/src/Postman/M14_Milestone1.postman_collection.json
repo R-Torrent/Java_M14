@@ -1,0 +1,928 @@
+{
+	"info": {
+		"_postman_id": "e66ed350-b4a7-4a4f-9cdb-2bfd339b7ad4",
+		"name": "M14_Milestone1",
+		"schema": "https://schema.getpostman.com/json/collection/v2.1.0/collection.json"
+	},
+	"item": [
+		{
+			"name": "root",
+			"event": [
+				{
+					"listen": "test",
+					"script": {
+						"exec": [
+							"pm.test(\"Status code is 200\", function () {\r",
+							"    pm.response.to.have.status(200);\r",
+							"});\r",
+							"\r",
+							"pm.test(\"root URL is OK\", function () {\r",
+							"    var jsonData = pm.response.json();\r",
+							"    pm.expect(jsonData._links).to.have.all.keys('botigues', 'quadres');\r",
+							"});"
+						],
+						"type": "text/javascript"
+					}
+				}
+			],
+			"protocolProfileBehavior": {
+				"disableBodyPruning": true
+			},
+			"request": {
+				"method": "GET",
+				"header": [],
+				"body": {
+					"mode": "raw",
+					"raw": ""
+				},
+				"url": {
+					"raw": "localhost:8080/",
+					"host": [
+						"localhost"
+					],
+					"port": "8080",
+					"path": [
+						""
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "Query general - botigues",
+			"event": [
+				{
+					"listen": "test",
+					"script": {
+						"exec": [
+							"pm.test(\"Status code is 200\", function () {\r",
+							"    pm.response.to.have.status(200);\r",
+							"});"
+						],
+						"type": "text/javascript"
+					}
+				}
+			],
+			"request": {
+				"method": "GET",
+				"header": [],
+				"url": {
+					"raw": "localhost:8080/botigues",
+					"host": [
+						"localhost"
+					],
+					"port": "8080",
+					"path": [
+						"botigues"
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "Query general - quadres",
+			"event": [
+				{
+					"listen": "test",
+					"script": {
+						"exec": [
+							"pm.test(\"Status code is 200\", function () {\r",
+							"    pm.response.to.have.status(200);\r",
+							"});"
+						],
+						"type": "text/javascript"
+					}
+				}
+			],
+			"request": {
+				"method": "GET",
+				"header": [],
+				"url": {
+					"raw": "localhost:8080/quadres",
+					"host": [
+						"localhost"
+					],
+					"port": "8080",
+					"path": [
+						"quadres"
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "Query específic - botiga #3",
+			"event": [
+				{
+					"listen": "test",
+					"script": {
+						"exec": [
+							"pm.test(\"Status code is 200\", function () {\r",
+							"    pm.response.to.have.status(200);\r",
+							"});\r",
+							"\r",
+							"pm.test(\"\\'botiga\\' is 3\", function () {\r",
+							"    var jsonData = pm.response.json();\r",
+							"    pm.expect(jsonData.id).to.equal(3);\r",
+							"});"
+						],
+						"type": "text/javascript"
+					}
+				}
+			],
+			"request": {
+				"method": "GET",
+				"header": [],
+				"url": {
+					"raw": "localhost:8080/botigues/3",
+					"host": [
+						"localhost"
+					],
+					"port": "8080",
+					"path": [
+						"botigues",
+						"3"
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "Query específic - quadres de la botiga #3",
+			"event": [
+				{
+					"listen": "test",
+					"script": {
+						"exec": [
+							"pm.test(\"Status code is 200\", function () {\r",
+							"    pm.response.to.have.status(200);\r",
+							"});\r",
+							"\r",
+							"var jsonData = pm.response.json()._embedded.quadreList;\r",
+							"pm.test(\"Tenim quadres\", function () {\r",
+							"    pm.expect(jsonData).to.be.an('array');\r",
+							"});\r",
+							"\r",
+							"pm.test(\"Tots els quadres són de \\'botiga\\' 3\", function () {\r",
+							"    jsonData.forEach(e => pm.expect(e.botiga.id).to.equal(3));\r",
+							"});\r",
+							"\r",
+							"let primerQuadre = pm.response.json()._embedded.quadreList[0];\r",
+							"    pm.collectionVariables.set(\"idPrimerQuadre3\", primerQuadre.id);"
+						],
+						"type": "text/javascript"
+					}
+				}
+			],
+			"request": {
+				"method": "GET",
+				"header": [],
+				"url": {
+					"raw": "localhost:8080/botigues/3/quadres",
+					"host": [
+						"localhost"
+					],
+					"port": "8080",
+					"path": [
+						"botigues",
+						"3",
+						"quadres"
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "Query específic - primer quadre de la botiga #3",
+			"event": [
+				{
+					"listen": "test",
+					"script": {
+						"exec": [
+							"pm.test(\"Status code is 200\", function () {\r",
+							"    pm.response.to.have.status(200);\r",
+							"});\r",
+							"\r",
+							"let quadre = pm.collectionVariables.get(\"idPrimerQuadre3\");\r",
+							"pm.test(\"\\'botiga\\' is 3 for \\'quadre\\' \" + quadre, function () {\r",
+							"    var jsonData = pm.response.json();\r",
+							"    pm.expect(jsonData.botiga.id).to.equal(3);\r",
+							"});"
+						],
+						"type": "text/javascript"
+					}
+				}
+			],
+			"request": {
+				"method": "GET",
+				"header": [],
+				"url": {
+					"raw": "localhost:8080/botigues/quadres/:id",
+					"host": [
+						"localhost"
+					],
+					"port": "8080",
+					"path": [
+						"botigues",
+						"quadres",
+						":id"
+					],
+					"variable": [
+						{
+							"key": "id",
+							"value": "{{idPrimerQuadre3}}"
+						}
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "Query específic - quadres de una botiga que no existeix",
+			"event": [
+				{
+					"listen": "test",
+					"script": {
+						"exec": [
+							"pm.test(\"Status code is 404 - \\'botiga\\' 99 no existeix\", function () {\r",
+							"    pm.response.to.have.status(404);\r",
+							"});"
+						],
+						"type": "text/javascript"
+					}
+				}
+			],
+			"request": {
+				"method": "GET",
+				"header": [],
+				"url": {
+					"raw": "localhost:8080/botigues/99/quadres",
+					"host": [
+						"localhost"
+					],
+					"port": "8080",
+					"path": [
+						"botigues",
+						"99",
+						"quadres"
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "Query específic - quadre que no existeix",
+			"event": [
+				{
+					"listen": "test",
+					"script": {
+						"exec": [
+							"pm.test(\"Status code is 404 - \\'quadre\\' 99 no existeix\", function () {\r",
+							"    pm.response.to.have.status(404);\r",
+							"});"
+						],
+						"type": "text/javascript"
+					}
+				}
+			],
+			"request": {
+				"method": "GET",
+				"header": [],
+				"url": {
+					"raw": "localhost:8080/botigues/quadres/99",
+					"host": [
+						"localhost"
+					],
+					"port": "8080",
+					"path": [
+						"botigues",
+						"quadres",
+						"99"
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "Afegir una botiga nova",
+			"event": [
+				{
+					"listen": "test",
+					"script": {
+						"exec": [
+							"pm.test(\"Successful POST request - Botiga nova\", function () {\r",
+							"    pm.expect(pm.response.code).to.be.oneOf([201,202]);\r",
+							"});\r",
+							"\r",
+							"let botiga = pm.response.json();\r",
+							"delete botiga['_links'];\r",
+							"pm.collectionVariables.set(\"botigaNova\", JSON.stringify(botiga));\r",
+							"pm.collectionVariables.set(\"idBotigaNova\", botiga.id);"
+						],
+						"type": "text/javascript"
+					}
+				}
+			],
+			"request": {
+				"method": "POST",
+				"header": [
+					{
+						"key": "Content-Type",
+						"value": "application/json",
+						"type": "text"
+					}
+				],
+				"body": {
+					"mode": "raw",
+					"raw": "{\r\n    \"nom\": \"Galería del daltonismo\",\r\n    \"capacitat\": 17\r\n}",
+					"options": {
+						"raw": {
+							"language": "json"
+						}
+					}
+				},
+				"url": {
+					"raw": "localhost:8080/botigues/",
+					"host": [
+						"localhost"
+					],
+					"port": "8080",
+					"path": [
+						"botigues",
+						""
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "Afegir un quadre nou a la botiga anterior",
+			"event": [
+				{
+					"listen": "prerequest",
+					"script": {
+						"exec": [
+							""
+						],
+						"type": "text/javascript"
+					}
+				},
+				{
+					"listen": "test",
+					"script": {
+						"exec": [
+							"pm.test(\"Successful POST request\", function () {\r",
+							"    pm.expect(pm.response.code).to.be.oneOf([201,202]);\r",
+							"});\r",
+							"\r",
+							"let jsonData = pm.response.json();\r",
+							"let idB = pm.collectionVariables.get(\"idBotigaNova\");\r",
+							"pm.test(\"Cuadre nou ben afegit\", function () {\r",
+							"    pm.expect(jsonData.botiga.id).to.equal(idB);\r",
+							"});\r",
+							"\r",
+							"pm.collectionVariables.set(\"idQuadreNou\", jsonData.id);"
+						],
+						"type": "text/javascript"
+					}
+				}
+			],
+			"request": {
+				"method": "POST",
+				"header": [
+					{
+						"key": "Content-Type",
+						"value": "application/json",
+						"type": "text"
+					}
+				],
+				"body": {
+					"mode": "raw",
+					"raw": "{\r\n    \"nom\": \"Retrato nocturno de una sombra\",\r\n    \"autor\": \"Perry Mason\",\r\n    \"preu\": 12.13,\r\n    \"data\": \"1953-11-30T22:00:00.000+00:00\",\r\n    \"botiga\": {{botigaNova}}\r\n}"
+				},
+				"url": {
+					"raw": "localhost:8080/botigues/:id/quadres",
+					"host": [
+						"localhost"
+					],
+					"port": "8080",
+					"path": [
+						"botigues",
+						":id",
+						"quadres"
+					],
+					"variable": [
+						{
+							"key": "id",
+							"value": "{{idBotigaNova}}"
+						}
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "Actualitzar la botiga anterior -> capacitat = 1",
+			"event": [
+				{
+					"listen": "prerequest",
+					"script": {
+						"exec": [
+							""
+						],
+						"type": "text/javascript"
+					}
+				},
+				{
+					"listen": "test",
+					"script": {
+						"exec": [
+							"pm.test(\"Successful PUT request\", function () {\r",
+							"    pm.expect(pm.response.code).to.be.oneOf([201, 202]);\r",
+							"});\r",
+							"\r",
+							"let botiga = pm.response.json();\r",
+							"pm.test(\"Capacitat reduïda a 1\", function () {\r",
+							"    pm.expect(botiga.capacitat).to.equal(1);\r",
+							"});\r",
+							"\r",
+							"delete botiga['_links'];\r",
+							"pm.collectionVariables.set(\"botigaNova\", JSON.stringify(botiga));"
+						],
+						"type": "text/javascript"
+					}
+				}
+			],
+			"request": {
+				"method": "PUT",
+				"header": [
+					{
+						"key": "Content-Type",
+						"value": "application/json",
+						"type": "text"
+					}
+				],
+				"body": {
+					"mode": "raw",
+					"raw": "{\r\n    \"capacitat\": 1\r\n}"
+				},
+				"url": {
+					"raw": "localhost:8080/botigues/:id",
+					"host": [
+						"localhost"
+					],
+					"port": "8080",
+					"path": [
+						"botigues",
+						":id"
+					],
+					"variable": [
+						{
+							"key": "id",
+							"value": "{{idBotigaNova}}"
+						}
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "Afegir un quadre nou a la botiga sense capacitat romanent",
+			"event": [
+				{
+					"listen": "prerequest",
+					"script": {
+						"exec": [
+							""
+						],
+						"type": "text/javascript"
+					}
+				},
+				{
+					"listen": "test",
+					"script": {
+						"exec": [
+							"pm.test(\"Unsuccessful POST request - Method Not Allowed\", function () {\r",
+							"    pm.response.to.have.status(405);\r",
+							"});"
+						],
+						"type": "text/javascript"
+					}
+				}
+			],
+			"request": {
+				"method": "POST",
+				"header": [
+					{
+						"key": "Content-Type",
+						"value": "application/json",
+						"type": "text"
+					}
+				],
+				"body": {
+					"mode": "raw",
+					"raw": "{\r\n    \"nom\": \"Una copa de jerez\",\r\n    \"autor\": \"Perry Mason\",\r\n    \"preu\": 17.09,\r\n    \"data\": \"1962-04-21T23:10:00.000+00:00\",\r\n    \"botiga\": {{botigaNova}}\r\n    }\r\n}"
+				},
+				"url": {
+					"raw": "localhost:8080/botigues/:id/quadres",
+					"host": [
+						"localhost"
+					],
+					"port": "8080",
+					"path": [
+						"botigues",
+						":id",
+						"quadres"
+					],
+					"variable": [
+						{
+							"key": "id",
+							"value": "{{idBotigaNova}}"
+						}
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "Actualitzar l'últim quadre afegit",
+			"event": [
+				{
+					"listen": "prerequest",
+					"script": {
+						"exec": [
+							""
+						],
+						"type": "text/javascript"
+					}
+				},
+				{
+					"listen": "test",
+					"script": {
+						"exec": [
+							"pm.test(\"Successful PUT request\", function () {\r",
+							"    pm.expect(pm.response.code).to.be.oneOf([201, 202]);\r",
+							"});\r",
+							"\r",
+							"pm.test(\"\\'autor\\' is null -> anònim\", function () {\r",
+							"    var jsonData = pm.response.json();\r",
+							"    pm.expect(jsonData.autor).to.be.null;\r",
+							"});"
+						],
+						"type": "text/javascript"
+					}
+				}
+			],
+			"request": {
+				"method": "PUT",
+				"header": [
+					{
+						"key": "Content-Type",
+						"value": "application/json",
+						"type": "text"
+					}
+				],
+				"body": {
+					"mode": "raw",
+					"raw": "{\r\n    \"nom\": \"Retrato nocturno de una sombra con algo de luz\",\r\n    \"preu\": 12.99\r\n}"
+				},
+				"url": {
+					"raw": "localhost:8080/botigues/quadres/:id",
+					"host": [
+						"localhost"
+					],
+					"port": "8080",
+					"path": [
+						"botigues",
+						"quadres",
+						":id"
+					],
+					"variable": [
+						{
+							"key": "id",
+							"value": "{{idQuadreNou}}"
+						}
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "Esborrar el quadre afegit - Quadre venut",
+			"event": [
+				{
+					"listen": "test",
+					"script": {
+						"exec": [
+							"pm.test(\"Successful DEL request\", function () {\r",
+							"    pm.response.to.have.status(204);\r",
+							"});"
+						],
+						"type": "text/javascript"
+					}
+				},
+				{
+					"listen": "prerequest",
+					"script": {
+						"exec": [
+							""
+						],
+						"type": "text/javascript"
+					}
+				}
+			],
+			"request": {
+				"method": "DELETE",
+				"header": [],
+				"url": {
+					"raw": "localhost:8080/botigues/quadres/:id",
+					"host": [
+						"localhost"
+					],
+					"port": "8080",
+					"path": [
+						"botigues",
+						"quadres",
+						":id"
+					],
+					"variable": [
+						{
+							"key": "id",
+							"value": "{{idQuadreNou}}"
+						}
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "Query específic - quadre ja no existeix",
+			"event": [
+				{
+					"listen": "test",
+					"script": {
+						"exec": [
+							"let quadre = pm.collectionVariables.get(\"idQuadreNou\");\r",
+							"pm.test(\"Status code is 404 - \\'quadre\\' \" + quadre + \" no existeix (= venut)\", function () {\r",
+							"    pm.response.to.have.status(404);\r",
+							"});"
+						],
+						"type": "text/javascript"
+					}
+				}
+			],
+			"request": {
+				"method": "GET",
+				"header": [],
+				"url": {
+					"raw": "localhost:8080/botigues/:id",
+					"host": [
+						"localhost"
+					],
+					"port": "8080",
+					"path": [
+						"botigues",
+						":id"
+					],
+					"variable": [
+						{
+							"key": "id",
+							"value": "{{idQuadreNou}}"
+						}
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "Esborrar botiga #3 - quadres romanen",
+			"event": [
+				{
+					"listen": "test",
+					"script": {
+						"exec": [
+							"pm.test(\"Successful DEL request\", function () {\r",
+							"    pm.response.to.have.status(204);\r",
+							"});"
+						],
+						"type": "text/javascript"
+					}
+				},
+				{
+					"listen": "prerequest",
+					"script": {
+						"exec": [
+							""
+						],
+						"type": "text/javascript"
+					}
+				}
+			],
+			"request": {
+				"method": "DELETE",
+				"header": [],
+				"url": {
+					"raw": "localhost:8080/botigues/3",
+					"host": [
+						"localhost"
+					],
+					"port": "8080",
+					"path": [
+						"botigues",
+						"3"
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "Query específic - botiga #3 (segona vegada)",
+			"event": [
+				{
+					"listen": "test",
+					"script": {
+						"exec": [
+							"pm.test(\"Status code is 404 Not Found\", function () {\r",
+							"    pm.response.to.have.status(404);\r",
+							"});"
+						],
+						"type": "text/javascript"
+					}
+				}
+			],
+			"request": {
+				"method": "GET",
+				"header": [],
+				"url": {
+					"raw": "localhost:8080/botigues/3",
+					"host": [
+						"localhost"
+					],
+					"port": "8080",
+					"path": [
+						"botigues",
+						"3"
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "El primer quadre de botiga #3 encara existeix...",
+			"event": [
+				{
+					"listen": "test",
+					"script": {
+						"exec": [
+							"let quadre = pm.collectionVariables.get(\"idPrimerQuadre3\");\r",
+							"pm.test(\"Status code is 200 - \\'quadre\\' \" + quadre + \" encara existeix\", function () {\r",
+							"    pm.response.to.have.status(200);\r",
+							"});\r",
+							"\r",
+							"pm.test(\"\\'botiga\\' is null\", function () {\r",
+							"    var jsonData = pm.response.json();\r",
+							"    pm.expect(jsonData.botiga).to.be.null;\r",
+							"});\r",
+							"\r",
+							"pm.test(\"\\'self\\' link a \\'botiga\\' 0 correcte\", function () {\r",
+							"    pm.expect(pm.response.text()).to.include(\"http://localhost:8080/botigues/0\");\r",
+							"});"
+						],
+						"type": "text/javascript"
+					}
+				}
+			],
+			"request": {
+				"method": "GET",
+				"header": [],
+				"url": {
+					"raw": "localhost:8080/botigues/quadres/:id",
+					"host": [
+						"localhost"
+					],
+					"port": "8080",
+					"path": [
+						"botigues",
+						"quadres",
+						":id"
+					],
+					"variable": [
+						{
+							"key": "id",
+							"value": "{{idPrimerQuadre3}}"
+						}
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "*** Batuda policial a botiga #4 - Destrucció dels quadres ***",
+			"event": [
+				{
+					"listen": "test",
+					"script": {
+						"exec": [
+							"pm.test(\"Successful DEL(cremar tot) request\", function () {\r",
+							"    pm.response.to.have.status(205);\r",
+							"});"
+						],
+						"type": "text/javascript"
+					}
+				}
+			],
+			"request": {
+				"method": "DELETE",
+				"header": [],
+				"url": {
+					"raw": "localhost:8080/botigues/4/quadres",
+					"host": [
+						"localhost"
+					],
+					"port": "8080",
+					"path": [
+						"botigues",
+						"4",
+						"quadres"
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "Query específic - quadres de la botiga #4",
+			"event": [
+				{
+					"listen": "test",
+					"script": {
+						"exec": [
+							"pm.test(\"Status code is 200 - Botiga existeix...\", function () {\r",
+							"    pm.response.to.have.status(200);\r",
+							"});\r",
+							"\r",
+							"pm.test(\"... pero ja no té quadres\", function () {\r",
+							"    pm.expect(pm.response.json()).to.not.have.property('_embedded');\r",
+							"});"
+						],
+						"type": "text/javascript"
+					}
+				}
+			],
+			"request": {
+				"method": "GET",
+				"header": [],
+				"url": {
+					"raw": "localhost:8080/botigues/4/quadres",
+					"host": [
+						"localhost"
+					],
+					"port": "8080",
+					"path": [
+						"botigues",
+						"4",
+						"quadres"
+					]
+				}
+			},
+			"response": []
+		}
+	],
+	"event": [
+		{
+			"listen": "prerequest",
+			"script": {
+				"type": "text/javascript",
+				"exec": [
+					""
+				]
+			}
+		},
+		{
+			"listen": "test",
+			"script": {
+				"type": "text/javascript",
+				"exec": [
+					""
+				]
+			}
+		}
+	],
+	"variable": [
+		{
+			"key": "idPrimerQuadre3",
+			"value": "GET quadres de botiga #3"
+		},
+		{
+			"key": "botigaNova",
+			"value": "POST botiga nova"
+		},
+		{
+			"key": "idBotigaNova",
+			"value": "POST botiga nova - id"
+		},
+		{
+			"key": "idQuadreNou",
+			"value": "POST quadre nou - id"
+		}
+	]
+}
